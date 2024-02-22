@@ -6,7 +6,7 @@
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 00:59:52 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/02/22 11:49:34 by vodebunm         ###   ########.fr       */
+/*   Updated: 2024/02/22 17:31:53 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,46 +49,46 @@ static char	*scan_new_line(char *line)
 	return (l2);
 }
 
-static char	*find_new_line(int fd, char *buffer, char *backup)
+static char	*find_new_line(int fd, char *buffer, char *s)
 {
 	int		bytes_read;
-	char	*temp;
+	char	*tmp;
 
 	bytes_read = 1;
 	while (1)
 	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		bytes_read = read(fd, buffer, BUFFER_SIZE - 1);
 		if (bytes_read == -1)
 			return (NULL);
 		else if (bytes_read == 0)
 			break ;
 		buffer[bytes_read] = '\0';
-		if (!backup)
-			backup = ft_strdup("");
-		temp = backup;
-		backup = ft_strjoin(temp, buffer);
-		free(temp);
+		if (!s)
+			s = ft_strdup("");
+		tmp = s;
+		s = ft_strjoin(tmp, buffer);
+		free(tmp);
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
-	return (backup);
+	return (s);
 }
 
 char	*get_next_line(int fd)
 {
 	char		*line;
 	char		*buffer;
-	static char	*backup;
+	static char	*s;
 
 	if ((fd < 0) || (BUFFER_SIZE <= 0))
 		return (NULL);
 	buffer = malloc((BUFFER_SIZE + 1) * (sizeof(char)));
 	if (!buffer)
 		return (NULL);
-	line = find_new_line(fd, buffer, backup);
+	line = find_new_line(fd, buffer, s);
 	free(buffer);
 	if (!line)
 		return (line);
-	backup = extract_new_line(line);
+	s = extract_new_line(line);
 	return (line);
 }

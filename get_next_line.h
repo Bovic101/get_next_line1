@@ -6,7 +6,7 @@
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 01:00:46 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/02/22 18:27:03 by vodebunm         ###   ########.fr       */
+/*   Updated: 2024/02/22 20:22:43 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,18 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# ifndef MAX_FD
+#  define MAX_FD 256
+# endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
 
 char	*get_next_line(int fd);
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
-void	*ft_memcpy(void *dest, const void *src, size_t n);
-char	*ft_strdup(const char *s1);
+char	*ft_strdup(const char *str);
 
 #endif

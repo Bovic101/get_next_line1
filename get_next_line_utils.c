@@ -6,7 +6,7 @@
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 01:00:22 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/02/22 16:58:23 by vodebunm         ###   ########.fr       */
+/*   Updated: 2024/02/22 20:21:35 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,50 +73,42 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*result;
-	size_t	len1;
-	size_t	len2;
-	size_t	i;
+	int		i;
+	int		j;
+	char	*s;
 
 	i = 0;
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	result = malloc((len1 + len2 + 1) * sizeof(char));
-	if (!result || !s1 || !s2)
+	j = 0;
+	s = (char *) malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (s == NULL)
 		return (NULL);
-	while (i < len1)
+	while (s1[i] != '\0')
 	{
-		result[i] = s1[i];
+		s[i] = s1[i];
 		i++;
 	}
-	while (i < len2 + len1)
+	while (s2[j] != '\0')
 	{
-		result[i] = *s2;
-		i++;
-		s2++;
+		s[i + j] = s2[j];
+		j++;
 	}
-	result[i] = '\0';
-	return (result);
+	s [i + j] = '\0';
+	return (s);
 }
 
-// Copy a block of memory from the source location to destination location
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+// allocate sufficient memory for a copy of the string
+char	*ft_strdup(const char *str)
 {
-	char		*d;
-	const char	*s;
+	size_t	i;
+	size_t	len;
+	char	*s;
 
-	if (!dest && !src)
-	{
-		return (dest);
-	}
-	d = dest;
-	s = src;
-	while (n)
-	{
-		*d = *s;
-		d++;
-		s++;
-		n--;
-	}
-	return (dest);
+	len = ft_strlen(str) + 1;
+	s = (char *)malloc(sizeof(char) * len);
+	if (s == NULL)
+		return (NULL);
+	i = -1;
+	while (++i < len)
+		s[i] = str[i];
+	return (s);
 }

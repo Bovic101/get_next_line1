@@ -6,7 +6,7 @@
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 00:59:52 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/02/22 17:31:53 by vodebunm         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:36:19 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*scan_new_line(char *line)
 	return (l2);
 }
 
-static char	*find_new_line(int fd, char *buffer, char *s)
+static char	*locate_newline(int fd, char *buffer, char *s)
 {
 	int		bytes_read;
 	char	*tmp;
@@ -57,7 +57,7 @@ static char	*find_new_line(int fd, char *buffer, char *s)
 	bytes_read = 1;
 	while (1)
 	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE - 1);
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
 			return (NULL);
 		else if (bytes_read == 0)
@@ -85,10 +85,10 @@ char	*get_next_line(int fd)
 	buffer = malloc((BUFFER_SIZE + 1) * (sizeof(char)));
 	if (!buffer)
 		return (NULL);
-	line = find_new_line(fd, buffer, s);
+	line = locate_newline(fd, buffer, s);
 	free(buffer);
 	if (!line)
 		return (line);
-	s = extract_new_line(line);
+	s = scan_new_line(line);
 	return (line);
 }

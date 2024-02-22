@@ -6,13 +6,12 @@
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 01:00:46 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/02/22 17:25:19 by vodebunm         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:27:03 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFFER_SIZE 1024
 # include <stddef.h>
 # include <stdlib.h>
 # include <string.h>

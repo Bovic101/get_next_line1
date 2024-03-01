@@ -6,16 +6,18 @@
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 01:00:46 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/02/22 20:22:43 by vodebunm         ###   ########.fr       */
+/*   Updated: 2024/02/23 03:09:35 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+# include <fcntl.h>
 # include <stddef.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <stdio.h>
 # ifndef MAX_FD
 #  define MAX_FD 256
 # endif

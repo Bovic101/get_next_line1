@@ -6,7 +6,7 @@
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 00:59:52 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/02/22 20:17:20 by vodebunm         ###   ########.fr       */
+/*   Updated: 2024/03/02 04:17:03 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_null(char **ptr)
 	if (*ptr != NULL)
 	{
 		free(*ptr);
-		ptr = NULL;
+		*ptr = NULL;
 	}
 }
 
@@ -46,22 +46,27 @@ char	*join_line(int nl_position, char **buffer)
 	return (res);
 }
 
-char	*read_line(int fd, char **buffer, char *read_return)
+char	*read_line(int fd, char **buffer, char *read_return, ssize_t br)
 {
-	ssize_t	bytes_read;
 	char	*tmp;
 	char	*nl;
 
 	nl = ft_strchr(*buffer, '\n');
 	tmp = NULL;
-	bytes_read = 0;
 	while (nl == NULL)
 	{
-		bytes_read = read(fd, read_return, BUFFER_SIZE);
-		if (bytes_read <= 0)
-			return (join_line(bytes_read, buffer));
-		read_return[bytes_read] = 0;
+		br = read(fd, read_return, BUFFER_SIZE);
+		if (br == -1)
+		{
+			free_null(buffer);
+			return (NULL);
+		}
+		if (br <= 0)
+			return (join_line(br, buffer));
+		read_return[br] = 0;
 		tmp = ft_strjoin(*buffer, read_return);
+		if (tmp == NULL)
+			return (NULL);
 		free_null(buffer);
 		*buffer = tmp;
 		nl = ft_strchr(*buffer, '\n');
@@ -82,7 +87,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!buffer[fd])
 		buffer[fd] = ft_strdup("");
-	res = read_line(fd, &buffer[fd], read_return);
+	res = read_line(fd, &buffer[fd], read_return, 0);
 	free_null(&read_return);
 	return (res);
 }
